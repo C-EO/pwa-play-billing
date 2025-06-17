@@ -250,17 +250,17 @@ export class PlayBillingService {
       typeof purchaseSku === 'string' ? skus.find((s) => s.itemId === purchaseSku) : purchaseSku;
 
     /* 
-    Set appropriate proration mode based on scenario. 
-    See https://developer.android.com/google/play/billing/subscriptions#proration-recommendations
-    for more information about the different proration modes and recommendations.
+    Set appropriate replacement mode based on scenario. 
+    See https://developer.android.com/google/play/billing/subscriptions#replacement-modes
+    for more information about the different replacement modes and recommendations.
     */
-    let prorationMode;
+    let replacementMode;
     switch (subType) {
       case 'upgrade':
-        prorationMode = 'immediateAndChargeProratedPrice';
+        replacementMode = 'chargeProratedPrice';
         break;
       case 'downgrade':
-        prorationMode = 'deferred';
+        replacementMode = 'deferred';
         break;
     }
 
@@ -272,7 +272,7 @@ export class PlayBillingService {
           sku: sku.itemId,
           oldSku: oldPurchase?.itemId,
           purchaseToken: oldPurchase?.purchaseToken,
-          prorationMode: prorationMode,
+          replacementMode: replacementMode,
         },
       },
     ];
